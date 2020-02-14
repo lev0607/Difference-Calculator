@@ -1,0 +1,24 @@
+{
+    "name": "lev/php-project-lvl2",
+    "bin": [
+        "bin/gendiff"
+    ],
+    "type": "project",
+    "description": "Second php project on hexlet.io.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lev0607",
+            "email": "lev36rus@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/genDiff.php"
+        ]
+    },
+    "require": {
+        "docopt/docopt": "^1.0",
+        "funct/funct": "^1.5"
+    }
+}
