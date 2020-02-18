@@ -22,6 +22,8 @@
         "funct/funct": "^1.5"
     },
     "scripts": {
+        "phpunit": "phpunit",
+        "test": "phpunit tests",
         "phpcs": "phpcs"
     },
     "require-dev": {
