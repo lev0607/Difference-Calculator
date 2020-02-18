@@ -8,8 +8,11 @@ use function Differ\genDiff\genDiff;
 
 class GenDiffTest extends TestCase
 {
-	public function testExample()
+    public function testJson()
     {
-        $this->assertTrue(true);
+        $path1 = 'tests/fixtures/before.json';
+        $path2 = 'tests/fixtures/after.json';
+        $expected = file_get_contents("tests/fixtures/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2));
     }
 }
