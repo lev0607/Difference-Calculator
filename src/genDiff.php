@@ -5,18 +5,17 @@ namespace Differ\genDiff;
 function genDiff($pathToFile1, $pathToFile2)
 {
     try {
-        $jsonBefore = getData($pathToFile1);
+        $before = getData($pathToFile1);
     } catch (\Exception $e) {
         echo $e;
     }
     try {
-        $jsonAfter = getData($pathToFile2);
+        $after = getData($pathToFile2);
     } catch (\Exception $e) {
         echo $e;
     }
 
-    return getDiff($jsonBefore, $jsonAfter);
-
+    return getDiff($before, $after);
 }
 
 function getData($pathToFile)
@@ -28,23 +27,22 @@ function getData($pathToFile)
     return json_decode(file_get_contents("$pathToFile"), true);
 }
 
-function getDiff($jsonBefore, $jsonAfter)
+function getDiff($before, $after)
 {
     $result = ["{"];
-    foreach ($jsonBefore as $key => $value) {
-        if (array_key_exists($key, $jsonAfter)) {
-            $result[] = $jsonAfter[$key] === $jsonBefore[$key] ? "    {$key}: {$jsonBefore[$key]}"
-             : "  - {$key}: {$jsonBefore[$key]}\n  + {$key}: {$jsonAfter[$key]}";
+    foreach ($before as $key => $value) {
+        if (array_key_exists($key, $after)) {
+            $result[] = $after[$key] === $before[$key] ? "    {$key}: {$before[$key]}"
+             : "  - {$key}: {$before[$key]}\n  + {$key}: {$after[$key]}";
         } else {
-            $result[] = "  - {$key}: {$jsonBefore[$key]}";
+            $result[] = "  - {$key}: {$before[$key]}";
         }
     }
-    foreach ($jsonAfter as $key => $value) {
-        if (!array_key_exists($key, $jsonBefore)) {
-            $result[] = "  + {$key}: {$jsonAfter[$key]}";
+    foreach ($after as $key => $value) {
+        if (!array_key_exists($key, $before)) {
+            $result[] = "  + {$key}: {$after[$key]}";
         }
     }
     $result[] = "}";
-    return implode("\n", $result) . "\n"; 
+    return implode("\n", $result) . "\n";
 }
-// print_r(genDiff("before.json", "after.json"));
