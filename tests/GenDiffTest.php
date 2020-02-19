@@ -15,4 +15,11 @@ class GenDiffTest extends TestCase
         $expected = file_get_contents("tests/fixtures/correctJson");
         $this->assertEquals($expected, genDiff($path1, $path2));
     }
+    public function testYaml()
+    {
+        $path1 = 'tests/fixtures/before.yaml';
+        $path2 = 'tests/fixtures/after.yaml';
+        $expected = file_get_contents("tests/fixtures/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2));
+    }
 }

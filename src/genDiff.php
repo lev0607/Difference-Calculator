@@ -2,6 +2,9 @@
 
 namespace Differ\genDiff;
 
+use function Differ\parsers\parsers;
+use Symfony\Component\Yaml\Yaml;
+
 function genDiff($pathToFile1, $pathToFile2)
 {
     try {
@@ -15,7 +18,7 @@ function genDiff($pathToFile1, $pathToFile2)
         echo $e;
     }
 
-    return getDiff($before, $after);
+    return parsers($before, $after);
 }
 
 function getData($pathToFile)
@@ -24,25 +27,15 @@ function getData($pathToFile)
         throw new \Exception("'{$pathToFile}' is not readble");
     }
 
-    return json_decode(file_get_contents("$pathToFile"), true);
+    $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
+
+    if ($extension === 'json') {
+        return json_decode(file_get_contents("$pathToFile"), true);
+    } elseif ($extension === 'yaml') {
+        return Yaml::parse(file_get_contents("$pathToFile"));
+    } else {
+        throw new \Exception("'{$extension}' - this extension is not supported");
+    }
 }
 
-function getDiff($before, $after)
-{
-    $result = ["{"];
-    foreach ($before as $key => $value) {
-        if (array_key_exists($key, $after)) {
-            $result[] = $after[$key] === $before[$key] ? "    {$key}: {$before[$key]}"
-             : "  - {$key}: {$before[$key]}\n  + {$key}: {$after[$key]}";
-        } else {
-            $result[] = "  - {$key}: {$before[$key]}";
-        }
-    }
-    foreach ($after as $key => $value) {
-        if (!array_key_exists($key, $before)) {
-            $result[] = "  + {$key}: {$after[$key]}";
-        }
-    }
-    $result[] = "}";
-    return implode("\n", $result) . "\n";
-}
+
