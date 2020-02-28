@@ -2,8 +2,10 @@
 
 namespace Differ\genDiff;
 
-use function Differ\parsers\parsers;
 use Symfony\Component\Yaml\Yaml;
+
+use function Differ\parsers\resultParsing;
+use function Differ\getDiff\getDiff;
 
 function genDiff($pathToFile1, $pathToFile2)
 {
@@ -18,7 +20,7 @@ function genDiff($pathToFile1, $pathToFile2)
         echo $e;
     }
 
-    return parsers($before, $after);
+    return resultParsing(getDiff($before, $after));
 }
 
 function getData($pathToFile)
@@ -37,5 +39,3 @@ function getData($pathToFile)
         throw new \Exception("'{$extension}' - this extension is not supported");
     }
 }
-
-
