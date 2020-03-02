@@ -6,3 +6,5 @@
 [![Test Coverage](https://codeclimate.com/github/lev0607/php-project-lvl2/badges/coverage.svg)](https://codeclimate.com/github/lev0607/php-project-lvl2/coverage)
 
 [![asciicast](https://asciinema.org/a/o3UAAuQz6EPNn68DSo6mLe3y9.svg)](https://asciinema.org/a/o3UAAuQz6EPNn68DSo6mLe3y9)
+
+[![asciicast](https://asciinema.org/a/rjTU7pZel9smwPPxBTtRUApgb.svg)](https://asciinema.org/a/rjTU7pZel9smwPPxBTtRUApgb)
