@@ -18,6 +18,7 @@
             "src/parsers.php",
             "src/formatters/formatPretty.php",
             "src/formatters/formatPlain.php",
+            "src/formatters/formatJson.php",
             "src/getDiff.php"
         ]
     },

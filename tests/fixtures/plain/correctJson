@@ -1,0 +1,27 @@
+[
+    {
+        "key": "host",
+        "value": "hexlet.io",
+        "state": "unchanged",
+        "type": "leaf"
+    },
+    {
+        "key": "timeout",
+        "valueBefore": 50,
+        "valueAfter": 20,
+        "state": "changed",
+        "type": "leaf"
+    },
+    {
+        "key": "proxy",
+        "value": "123.234.53.22",
+        "state": "deleted",
+        "type": "leaf"
+    },
+    {
+        "key": "verbose",
+        "value": true,
+        "state": "added",
+        "type": "leaf"
+    }
+]

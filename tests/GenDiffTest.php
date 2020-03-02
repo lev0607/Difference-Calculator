@@ -18,6 +18,9 @@ class GenDiffTest extends TestCase
 
         $expected = file_get_contents("tests/fixtures/plain/correctPlain");
         $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
+
+        $expected = file_get_contents("tests/fixtures/plain/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
     }
     public function testPlainYaml()
     {
@@ -29,6 +32,9 @@ class GenDiffTest extends TestCase
 
         $expected = file_get_contents("tests/fixtures/plain/correctPlain");
         $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
+
+        $expected = file_get_contents("tests/fixtures/plain/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
     }
     public function testNestedJson()
     {
@@ -40,6 +46,9 @@ class GenDiffTest extends TestCase
 
         $expected = file_get_contents("tests/fixtures/nested/correctNested");
         $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
+
+        $expected = file_get_contents("tests/fixtures/nested/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
     }
     public function testNestedYaml()
     {
@@ -51,6 +60,8 @@ class GenDiffTest extends TestCase
 
         $expected = file_get_contents("tests/fixtures/nested/correctNested");
         $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
-    }
 
+        $expected = file_get_contents("tests/fixtures/nested/correctJson");
+        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
+    }
 }

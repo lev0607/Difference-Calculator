@@ -1,0 +1,85 @@
+[
+    {
+        "key": "common",
+        "children": [
+            {
+                "key": "setting1",
+                "value": "Value 1",
+                "state": "unchanged",
+                "type": "leaf"
+            },
+            {
+                "key": "setting2",
+                "value": "200",
+                "state": "deleted",
+                "type": "leaf"
+            },
+            {
+                "key": "setting3",
+                "value": true,
+                "state": "unchanged",
+                "type": "leaf"
+            },
+            {
+                "key": "setting6",
+                "value": {
+                    "key": "value"
+                },
+                "state": "deleted",
+                "type": "leaf"
+            },
+            {
+                "key": "setting4",
+                "value": "blah blah",
+                "state": "added",
+                "type": "leaf"
+            },
+            {
+                "key": "setting5",
+                "value": {
+                    "key5": "value5"
+                },
+                "state": "added",
+                "type": "leaf"
+            }
+        ],
+        "state": "unchanged",
+        "type": "node"
+    },
+    {
+        "key": "group1",
+        "children": [
+            {
+                "key": "baz",
+                "valueBefore": "bas",
+                "valueAfter": "bars",
+                "state": "changed",
+                "type": "leaf"
+            },
+            {
+                "key": "foo",
+                "value": "bar",
+                "state": "unchanged",
+                "type": "leaf"
+            }
+        ],
+        "state": "unchanged",
+        "type": "node"
+    },
+    {
+        "key": "group2",
+        "value": {
+            "abc": "12345"
+        },
+        "state": "deleted",
+        "type": "leaf"
+    },
+    {
+        "key": "group3",
+        "value": {
+            "fee": "100500"
+        },
+        "state": "added",
+        "type": "leaf"
+    }
+]
