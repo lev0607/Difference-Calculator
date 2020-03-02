@@ -4,37 +4,36 @@ namespace Differ\genDiff;
 
 use Symfony\Component\Yaml\Yaml;
 
-use function Differ\parsers\resultParsing;
-use function Differ\getDiff\getDiff;
+use function Differ\parsers\parser;
 
-function genDiff($pathToFile1, $pathToFile2)
+function genDiff($path1, $path2, $format)
 {
     try {
-        $before = getData($pathToFile1);
+        $before = getData($path1);
     } catch (\Exception $e) {
         echo $e;
     }
     try {
-        $after = getData($pathToFile2);
+        $after = getData($path2);
     } catch (\Exception $e) {
         echo $e;
     }
 
-    return resultParsing(getDiff($before, $after));
+    return parser($before, $after, $format);
 }
 
-function getData($pathToFile)
+function getData($path)
 {
-    if (!is_readable($pathToFile)) {
-        throw new \Exception("'{$pathToFile}' is not readble");
+    if (!is_readable($path)) {
+        throw new \Exception("'{$path}' is not readble");
     }
 
-    $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
 
     if ($extension === 'json') {
-        return json_decode(file_get_contents("$pathToFile"), true);
+        return json_decode(file_get_contents("$path"), true);
     } elseif ($extension === 'yaml') {
-        return Yaml::parse(file_get_contents("$pathToFile"));
+        return Yaml::parse(file_get_contents("$path"));
     } else {
         throw new \Exception("'{$extension}' - this extension is not supported");
     }
