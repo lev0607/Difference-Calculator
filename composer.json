@@ -19,7 +19,7 @@
             "src/formatters/formatPretty.php",
             "src/formatters/formatPlain.php",
             "src/formatters/formatJson.php",
-            "src/getDiff.php"
+            "src/buildDiff.php"
         ]
     },
     "require": {

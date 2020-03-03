@@ -2,20 +2,21 @@
 
 namespace Differ\parsers;
 
-use function Differ\formatters\formatPretty\resultPretty;
-use function Differ\formatters\formatPlain\resultPlain;
-use function Differ\formatters\formatJson\resultJson;
-use function Differ\getDiff\getDiff;
+use function Differ\formatters\formatPretty\formatPretty;
+use function Differ\formatters\formatPlain\formatPlain;
+use function Differ\formatters\formatJson\formatJson;
+use function Differ\buildDiff\buildDiff;
 
-function parser($before, $after, $format)
+function parseFormatters($before, $after, $format)
 {
-    if ($format === 'plain') {
-        return resultPlain(getDiff($before, $after));
-    }
-    if ($format === 'pretty') {
-        return resultPretty(getDiff($before, $after));
-    }
-    if ($format === 'json') {
-        return resultJson(getDiff($before, $after));
+    switch ($format) {
+        case 'plain':
+            return formatPlain(buildDiff($before, $after));
+        case 'pretty':
+            return formatPretty(buildDiff($before, $after));
+        case 'json':
+            return formatJson(buildDiff($before, $after));
+        default:
+            throw new \Exception("Unknown format: {$format}!");
     }
 }

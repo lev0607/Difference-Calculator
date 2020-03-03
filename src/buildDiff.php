@@ -1,8 +1,8 @@
 <?php
 
-namespace Differ\getDiff;
+namespace Differ\buildDiff;
 
-function getDiff($before, $after)
+function buildDiff($before, $after)
 {
     $keys = array_keys(array_merge($before, $after));
     $f = function ($key) use (&$before, &$after, &$getDiff) {
@@ -26,7 +26,7 @@ function getDiff($before, $after)
             if (is_array($before[$key]) && is_array($after[$key])) {
                 return [
                     "key" => $key,
-                    "children" => getDiff($before[$key], $after[$key]),
+                    "children" => buildDiff($before[$key], $after[$key]),
                     "state" => "unchanged",
                     "type" => "node"
                 ];

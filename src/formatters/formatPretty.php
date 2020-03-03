@@ -2,41 +2,7 @@
 
 namespace Differ\formatters\formatPretty;
 
-function parserPretty($diff, $depth = 0)
-{
-    return array_map(function ($item) use (&$parser, &$depth) {
-        $key = $item['key'];
-        $offsets = [
-            "base" => "    ",
-            "deleted" => "  - ",
-            "added" => "  + ",
-            "depth" => str_repeat("    ", $depth)
-        ];
-
-        switch ($item['state']) {
-            case 'unchanged':
-                if ($item['type'] == 'node') {
-                    $value = implode("\n", parserPretty($item['children'], $depth + 1)) . "\n{$offsets["base"]}}";
-                    return "{$offsets["depth"]}{$offsets["base"]}{$key}: {\n{$value}";
-                }
-                $value = formatDiff($item['value'], $offsets);
-                return "{$offsets['depth']}{$offsets['base']}{$key}: {$value}";
-            case 'deleted':
-                $value = formatDiff($item['value'], $offsets);
-                return "{$offsets['depth']}{$offsets['deleted']}{$key}: {$value}";
-            case 'added':
-                $value = formatDiff($item['value'], $offsets);
-                return "{$offsets['depth']}{$offsets['added']}{$key}: {$value}";
-            case 'changed':
-                $valueBefore = formatDiff($item['valueBefore'], $offsets);
-                $valueAfter = formatDiff($item['valueAfter'], $offsets);
-                return "{$offsets['depth']}{$offsets['deleted']}{$key}: {$valueBefore}\n" .
-                "{$offsets['depth']}{$offsets['added']}{$key}: {$valueAfter}";
-        }
-    }, $diff);
-}
-
-function formatDiff($item, $offsets)
+function getValue($item, $offsets)
 {
     if (is_array($item)) {
         $prettyValue = json_encode($item, JSON_PRETTY_PRINT);
@@ -58,7 +24,47 @@ function formatDiff($item, $offsets)
     return $item;
 }
 
-function resultPretty($diff)
+function parsePretty($diff, $depth = 0)
 {
-    return "{\n"  . implode("\n", parserPretty($diff)) . "\n}\n";
+    return array_map(function ($item) use (&$depth) {
+        $key = $item['key'];
+        $offsets = [
+            "base" => "    ",
+            "deleted" => "  - ",
+            "added" => "  + ",
+            "depth" => str_repeat("    ", $depth)
+        ];
+
+        switch ($item['state']) {
+            case 'unchanged':
+                if ($item['type'] == 'node') {
+                    $value = implode("\n", parsePretty($item['children'], $depth + 1)) . "\n{$offsets['base']}}";
+                    return "{$offsets['depth']}{$offsets['base']}{$key}: {\n{$value}";
+                }
+                $value = getValue($item['value'], $offsets);
+                return "{$offsets['depth']}{$offsets['base']}{$key}: {$value}";
+            case 'deleted':
+                $value = getValue($item['value'], $offsets);
+                return "{$offsets['depth']}{$offsets['deleted']}{$key}: {$value}";
+            case 'added':
+                $value = getValue($item['value'], $offsets);
+                return "{$offsets['depth']}{$offsets['added']}{$key}: {$value}";
+            case 'changed':
+                $valueBefore = getValue($item['valueBefore'], $offsets);
+                $valueAfter = getValue($item['valueAfter'], $offsets);
+                return "{$offsets['depth']}{$offsets['deleted']}{$key}: {$valueBefore}\n" .
+                "{$offsets['depth']}{$offsets['added']}{$key}: {$valueAfter}";
+            default:
+                throw new \Exception("Unknown state: {$item['state']}!");
+        }
+    }, $diff);
+}
+
+function formatPretty($diff)
+{
+    try {
+        return "{\n"  . implode("\n", parsePretty($diff)) . "\n}\n";
+    } catch (\Exception $e) {
+        echo $e;
+    }
 }
