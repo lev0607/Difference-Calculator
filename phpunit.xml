@@ -10,15 +10,13 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="true">
-  <testsuites>
-    <testsuite name="Main">
-      <directory>tests/</directory>
-    </testsuite>
-  </testsuites>
-
-  <filter>
-    <whitelist>
-      <directory suffix=".php">src/</directory>
-    </whitelist>
-  </filter>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <!-- the files included in the clover report -->
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+    </logging>
 </phpunit>
