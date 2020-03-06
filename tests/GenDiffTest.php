@@ -26,21 +26,24 @@ class GenDiffTest extends TestCase
         $actual = genDiff(
             $this->getFixturePath('before.json'),
             $this->getFixturePath('after.json'),
-            'pretty');
+            'pretty'
+        );
         $this->assertEquals($expected, $actual);
 
         $expected = $this->readFile("correctNested");
         $actual = genDiff(
             $this->getFixturePath('before.json'),
             $this->getFixturePath('after.json'),
-            'plain');
+            'plain'
+        );
         $this->assertEquals($expected, $actual);
 
         $expected = $this->readFile("correctJson");
         $actual = genDiff(
             $this->getFixturePath('before.json'),
             $this->getFixturePath('after.json'),
-            'json');
+            'json'
+        );
         $this->assertEquals($expected, $actual);
     }
     public function testYaml()
@@ -49,21 +52,24 @@ class GenDiffTest extends TestCase
         $actual = genDiff(
             $this->getFixturePath('before.yaml'),
             $this->getFixturePath('after.yaml'),
-            'pretty');
+            'pretty'
+        );
         $this->assertEquals($expected, $actual);
 
         $expected = $this->readFile("correctNested");
         $actual = genDiff(
             $this->getFixturePath('before.yaml'),
             $this->getFixturePath('after.yaml'),
-            'plain');
+            'plain'
+        );
         $this->assertEquals($expected, $actual);
 
         $expected = $this->readFile("correctJson");
         $actual = genDiff(
             $this->getFixturePath('before.yaml'),
             $this->getFixturePath('after.yaml'),
-            'json');
+            'json'
+        );
         $this->assertEquals($expected, $actual);
     }
 }

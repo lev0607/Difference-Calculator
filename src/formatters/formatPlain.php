@@ -45,9 +45,5 @@ function parsePlain($diff, $path = '')
 
 function formatPlain($diff)
 {
-    try {
-        return implode("\n", array_filter(parsePlain($diff))) . "\n";
-    } catch (\Exception $e) {
-        echo $e;
-    }
+    return implode("\n", array_filter(parsePlain($diff))) . "\n";
 }

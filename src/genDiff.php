@@ -25,19 +25,7 @@ function getData($path)
 
 function genDiff($path1, $path2, $format)
 {
-    try {
-        $before = getData($path1);
-    } catch (\Exception $e) {
-        echo $e;
-    }
-    try {
-        $after = getData($path2);
-    } catch (\Exception $e) {
-        echo $e;
-    }
-    try {
-        return parseFormatters($before, $after, $format);
-    } catch (\Exception $e) {
-        echo $e;
-    }
+    $before = getData($path1);
+    $after = getData($path2);
+    return parseFormatters($before, $after, $format);
 }

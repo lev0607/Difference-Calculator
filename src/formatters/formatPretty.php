@@ -62,9 +62,5 @@ function parsePretty($diff, $depth = 0)
 
 function formatPretty($diff)
 {
-    try {
-        return "{\n"  . implode("\n", parsePretty($diff)) . "\n}\n";
-    } catch (\Exception $e) {
-        echo $e;
-    }
+    return "{\n"  . implode("\n", parsePretty($diff)) . "\n}\n";
 }
