@@ -62,5 +62,5 @@ function parsePretty($diff, $depth = 0)
 
 function formatPretty($diff)
 {
-    return "{\n"  . implode("\n", parsePretty($diff)) . "\n}\n";
+    return "{\n" . implode("\n", parsePretty($diff)) . "\n}\n";
 }

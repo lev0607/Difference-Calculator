@@ -2,21 +2,21 @@
 
 namespace Differ\parsers;
 
-use function Differ\formatters\formatPretty\formatPretty;
-use function Differ\formatters\formatPlain\formatPlain;
-use function Differ\formatters\formatJson\formatJson;
-use function Differ\buildDiff\buildDiff;
+use Symfony\Component\Yaml\Yaml;
 
-function parseFormatters($before, $after, $format)
+function parseData($path)
 {
-    switch ($format) {
-        case 'plain':
-            return formatPlain(buildDiff($before, $after));
-        case 'pretty':
-            return formatPretty(buildDiff($before, $after));
-        case 'json':
-            return formatJson(buildDiff($before, $after));
-        default:
-            throw new \Exception("Unknown format: {$format}!");
+    if (!is_readable($path)) {
+        throw new \Exception("'{$path}' is not readble");
+    }
+
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+    if ($extension === 'json') {
+        return json_decode(file_get_contents("$path"), true);
+    } elseif ($extension === 'yaml') {
+        return Yaml::parse(file_get_contents("$path"));
+    } else {
+        throw new \Exception("'{$extension}' - this extension is not supported");
     }
 }

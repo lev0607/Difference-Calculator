@@ -16,6 +16,7 @@
         "files": [
             "src/genDiff.php",
             "src/parsers.php",
+            "src/renderer.php",
             "src/formatters/formatPretty.php",
             "src/formatters/formatPlain.php",
             "src/formatters/formatJson.php",
