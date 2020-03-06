@@ -8,32 +8,62 @@ use function Differ\genDiff\genDiff;
 
 class GenDiffTest extends TestCase
 {
-    public function testNestedJson()
+    private function getFixturePath($fileName)
     {
-        $path1 = 'tests/fixtures/nested/before.json';
-        $path2 = 'tests/fixtures/nested/after.json';
-
-        $expected = file_get_contents("tests/fixtures/nested/correct");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'pretty'));
-
-        $expected = file_get_contents("tests/fixtures/nested/correctNested");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
-
-        $expected = file_get_contents("tests/fixtures/nested/correctJson");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
+        return __DIR__ . DIRECTORY_SEPARATOR
+            . 'fixtures' . DIRECTORY_SEPARATOR
+            . $fileName;
     }
-    public function testNestedYaml()
+
+    private function readFile($fileName)
     {
-        $path1 = 'tests/fixtures/nested/before.yaml';
-        $path2 = 'tests/fixtures/nested/after.yaml';
+        return file_get_contents($this->getFixturePath($fileName));
+    }
 
-        $expected = file_get_contents("tests/fixtures/nested/correct");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'pretty'));
+    public function testJson()
+    {
+        $expected = $this->readFile('correct');
+        $actual = genDiff(
+            $this->getFixturePath('before.json'),
+            $this->getFixturePath('after.json'),
+            'pretty');
+        $this->assertEquals($expected, $actual);
 
-        $expected = file_get_contents("tests/fixtures/nested/correctNested");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
+        $expected = $this->readFile("correctNested");
+        $actual = genDiff(
+            $this->getFixturePath('before.json'),
+            $this->getFixturePath('after.json'),
+            'plain');
+        $this->assertEquals($expected, $actual);
 
-        $expected = file_get_contents("tests/fixtures/nested/correctJson");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
+        $expected = $this->readFile("correctJson");
+        $actual = genDiff(
+            $this->getFixturePath('before.json'),
+            $this->getFixturePath('after.json'),
+            'json');
+        $this->assertEquals($expected, $actual);
+    }
+    public function testYaml()
+    {
+        $expected = $this->readFile('correct');
+        $actual = genDiff(
+            $this->getFixturePath('before.yaml'),
+            $this->getFixturePath('after.yaml'),
+            'pretty');
+        $this->assertEquals($expected, $actual);
+
+        $expected = $this->readFile("correctNested");
+        $actual = genDiff(
+            $this->getFixturePath('before.yaml'),
+            $this->getFixturePath('after.yaml'),
+            'plain');
+        $this->assertEquals($expected, $actual);
+
+        $expected = $this->readFile("correctJson");
+        $actual = genDiff(
+            $this->getFixturePath('before.yaml'),
+            $this->getFixturePath('after.yaml'),
+            'json');
+        $this->assertEquals($expected, $actual);
     }
 }
