@@ -8,34 +8,6 @@ use function Differ\genDiff\genDiff;
 
 class GenDiffTest extends TestCase
 {
-    public function testPlainJson()
-    {
-        $path1 = 'tests/fixtures/plain/before.json';
-        $path2 = 'tests/fixtures/plain/after.json';
-
-        $expected = file_get_contents("tests/fixtures/plain/correct");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'pretty'));
-
-        $expected = file_get_contents("tests/fixtures/plain/correctPlain");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
-
-        $expected = file_get_contents("tests/fixtures/plain/correctJson");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
-    }
-    public function testPlainYaml()
-    {
-        $path1 = 'tests/fixtures/plain/before.yaml';
-        $path2 = 'tests/fixtures/plain/after.yaml';
-
-        $expected = file_get_contents("tests/fixtures/plain/correct");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'pretty'));
-
-        $expected = file_get_contents("tests/fixtures/plain/correctPlain");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'plain'));
-
-        $expected = file_get_contents("tests/fixtures/plain/correctJson");
-        $this->assertEquals($expected, genDiff($path1, $path2, 'json'));
-    }
     public function testNestedJson()
     {
         $path1 = 'tests/fixtures/nested/before.json';
