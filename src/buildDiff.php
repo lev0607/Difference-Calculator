@@ -10,16 +10,14 @@ function buildDiff($before, $after)
             return [
                 "key" => $key,
                 "value" => $after[$key],
-                "state" => "added",
-                "type" => "leaf"
+                "type" => "added"
                 ];
         }
         if (!array_key_exists($key, $after)) {
             return [
                 "key" => $key,
                 "value" => $before[$key],
-                "state" => "deleted",
-                "type" => "leaf"
+                "type" => "deleted"
                 ];
         }
         if (array_key_exists($key, $after) && array_key_exists($key, $before)) {
@@ -27,7 +25,6 @@ function buildDiff($before, $after)
                 return [
                     "key" => $key,
                     "children" => buildDiff($before[$key], $after[$key]),
-                    "state" => "unchanged",
                     "type" => "node"
                 ];
             }
@@ -36,8 +33,7 @@ function buildDiff($before, $after)
                 return [
                     "key" => $key,
                     "value" => $before[$key],
-                    "state" => "unchanged",
-                    "type" => "leaf"
+                    "type" => "unchanged"
                     ];
             }
 
@@ -46,8 +42,7 @@ function buildDiff($before, $after)
                     "key" => $key,
                     "valueBefore" => $before[$key],
                     "valueAfter" => $after[$key],
-                    "state" => "changed",
-                    "type" => "leaf"
+                    "type" => "changed"
                     ];
             }
         }

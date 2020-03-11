@@ -35,12 +35,11 @@ function parsePretty($diff, $depth = 0)
             "depth" => str_repeat("    ", $depth)
         ];
 
-        switch ($item['state']) {
+        switch ($item['type']) {
+            case 'node':
+                $value = implode("\n", parsePretty($item['children'], $depth + 1)) . "\n{$offsets['base']}}";
+                return "{$offsets['depth']}{$offsets['base']}{$key}: {\n{$value}";
             case 'unchanged':
-                if ($item['type'] == 'node') {
-                    $value = implode("\n", parsePretty($item['children'], $depth + 1)) . "\n{$offsets['base']}}";
-                    return "{$offsets['depth']}{$offsets['base']}{$key}: {\n{$value}";
-                }
                 $value = getValue($item['value'], $offsets);
                 return "{$offsets['depth']}{$offsets['base']}{$key}: {$value}";
             case 'deleted':
@@ -55,7 +54,7 @@ function parsePretty($diff, $depth = 0)
                 return "{$offsets['depth']}{$offsets['deleted']}{$key}: {$valueBefore}\n" .
                 "{$offsets['depth']}{$offsets['added']}{$key}: {$valueAfter}";
             default:
-                throw new \Exception("Unknown state: {$item['state']}!");
+                throw new \Exception("Unknown type: {$item['type']}!");
         }
     }, $diff);
 }

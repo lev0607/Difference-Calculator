@@ -21,11 +21,10 @@ function parsePlain($diff, $path = '')
     return array_map(function ($item) use (&$path) {
         $key = $item['key'];
 
-        switch ($item['state']) {
+        switch ($item['type']) {
+            case 'node':
+                return implode("\n", array_filter(parsePlain($item['children'], "{$path}{$key}.")));
             case 'unchanged':
-                if ($item['type'] == 'node') {
-                    return implode("\n", array_filter(parsePlain($item['children'], "{$path}{$key}.")));
-                }
                 return;
             case 'deleted':
                 $value = getValue($item['value']);
@@ -38,7 +37,7 @@ function parsePlain($diff, $path = '')
                 $valueAfter = getValue($item['valueAfter']);
                 return "Property {$path}{$key} was changed. From '{$valueBefore}' to '{$valueAfter}'";
             default:
-                throw new \Exception("Unknown state: {$item['state']}!");
+                throw new \Exception("Unknown type: {$item['type']}!");
         }
     }, $diff);
 }
