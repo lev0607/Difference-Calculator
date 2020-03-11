@@ -2,26 +2,24 @@
 
 namespace Differ\formatters\formatPretty;
 
+function formatArrayValue($value, $offsets)
+{
+    $prettyValue = json_encode($value, JSON_PRETTY_PRINT);
+    $deleteСharacters = str_replace(['"', ','], '', $prettyValue);
+    $addOffset = str_replace(
+        "\n{$offsets['base']}",
+        "\n{$offsets['depth']}{$offsets['base']}{$offsets['base']}",
+        $deleteСharacters
+    );
+    return str_replace("\n}", "\n{$offsets['depth']}{$offsets['base']}}", $addOffset);
+}
+
 function getValue($item, $offsets)
 {
     if (is_array($item)) {
-        $prettyValue = json_encode($item, JSON_PRETTY_PRINT);
-        $deleteСharacters = str_replace(['"', ','], '', $prettyValue);
-        $addOffset = str_replace(
-            "\n{$offsets['base']}",
-            "\n{$offsets['depth']}{$offsets['base']}{$offsets['base']}",
-            $deleteСharacters
-        );
-        $value = str_replace("\n}", "\n{$offsets['depth']}{$offsets['base']}}", $addOffset);
-        return $value;
+        return formatArrayValue($item, $offsets);
     }
-
-    if (is_bool($item)) {
-        $value = json_encode($item);
-        return $value;
-    }
-
-    return $item;
+    return is_bool($item) ? json_encode($item) : $item;
 }
 
 function parsePretty($diff, $depth = 0)

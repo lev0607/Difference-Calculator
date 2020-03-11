@@ -7,13 +7,7 @@ function getValue($item)
     if (is_array($item)) {
         return 'complex value';
     }
-
-    if (is_bool($item)) {
-        $value = json_encode($item);
-        return $value;
-    }
-
-    return $item;
+    return is_bool($item) ? json_encode($item) : $item;
 }
 
 function parsePlain($diff, $path = '')
