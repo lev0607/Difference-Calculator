@@ -6,7 +6,7 @@ use function Differ\formatters\formatPretty\formatPretty;
 use function Differ\formatters\formatPlain\formatPlain;
 use function Differ\formatters\formatJson\formatJson;
 
-function renderFormatters($diff, $format)
+function render($diff, $format)
 {
     switch ($format) {
         case 'plain':
