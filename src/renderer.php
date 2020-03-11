@@ -5,17 +5,16 @@ namespace Differ\renderer;
 use function Differ\formatters\formatPretty\formatPretty;
 use function Differ\formatters\formatPlain\formatPlain;
 use function Differ\formatters\formatJson\formatJson;
-use function Differ\buildDiff\buildDiff;
 
-function renderFormatters($before, $after, $format)
+function renderFormatters($diff, $format)
 {
     switch ($format) {
         case 'plain':
-            return formatPlain(buildDiff($before, $after));
+            return formatPlain($diff);
         case 'pretty':
-            return formatPretty(buildDiff($before, $after));
+            return formatPretty($diff);
         case 'json':
-            return formatJson(buildDiff($before, $after));
+            return formatJson($diff);
         default:
             throw new \Exception("Unknown format: {$format}!");
     }

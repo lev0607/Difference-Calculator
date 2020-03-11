@@ -5,7 +5,7 @@ namespace Differ\buildDiff;
 function buildDiff($before, $after)
 {
     $keys = array_keys(array_merge($before, $after));
-    $f = function ($key) use (&$before, &$after, &$getDiff) {
+    $f = function ($key) use ($before, $after) {
         if (!array_key_exists($key, $before)) {
             return [
                 "key" => $key,
