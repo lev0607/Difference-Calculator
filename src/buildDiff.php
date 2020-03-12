@@ -47,6 +47,5 @@ function buildDiff($before, $after)
             }
         }
     };
-    $result = array_map($f, $keys);
-    return $result;
+    return array_map($f, $keys);
 }

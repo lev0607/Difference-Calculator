@@ -20,56 +20,30 @@ class GenDiffTest extends TestCase
         return file_get_contents($this->getFixturePath($fileName));
     }
 
-    public function testJson()
+    /**
+     * @dataProvider additionProvider
+     */
+
+    public function testDiff($fixture, $extention, $format)
     {
-        $expected = $this->readFile('correct');
+        $expected = $this->readFile($fixture);
         $actual = genDiff(
-            $this->getFixturePath('before.json'),
-            $this->getFixturePath('after.json'),
-            'pretty'
-        );
-        $this->assertEquals($expected, $actual);
-
-        $expected = $this->readFile("correctNested");
-        $actual = genDiff(
-            $this->getFixturePath('before.json'),
-            $this->getFixturePath('after.json'),
-            'plain'
-        );
-        $this->assertEquals($expected, $actual);
-
-        $expected = $this->readFile("correctJson");
-        $actual = genDiff(
-            $this->getFixturePath('before.json'),
-            $this->getFixturePath('after.json'),
-            'json'
+            $this->getFixturePath('before.' . $extention),
+            $this->getFixturePath('after.' . $extention),
+            $format
         );
         $this->assertEquals($expected, $actual);
     }
-    public function testYaml()
+    
+    public function additionProvider()
     {
-        $expected = $this->readFile('correct');
-        $actual = genDiff(
-            $this->getFixturePath('before.yaml'),
-            $this->getFixturePath('after.yaml'),
-            'pretty'
-        );
-        $this->assertEquals($expected, $actual);
-
-        $expected = $this->readFile("correctNested");
-        $actual = genDiff(
-            $this->getFixturePath('before.yaml'),
-            $this->getFixturePath('after.yaml'),
-            'plain'
-        );
-        $this->assertEquals($expected, $actual);
-
-        $expected = $this->readFile("correctJson");
-        $actual = genDiff(
-            $this->getFixturePath('before.yaml'),
-            $this->getFixturePath('after.yaml'),
-            'json'
-        );
-        $this->assertEquals($expected, $actual);
+        return [
+            ['correctPretty', 'json', 'pretty'],
+            ['correctPlain','json', 'plain'],
+            ['correctJson','json', 'json'],
+            ['correctPretty','yaml', 'pretty'],
+            ['correctPlain','yaml', 'plain'],
+            ['correctJson','yaml', 'json']
+        ];
     }
 }
